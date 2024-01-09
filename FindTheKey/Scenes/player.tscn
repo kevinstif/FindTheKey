@@ -1,0 +1,123 @@
+[gd_scene load_steps=12 format=3 uid="uid://btorfxim0y1jl"]
+
+[ext_resource type="Texture2D" uid="uid://beequw6iumu70" path="res://Resources/Assets/Enemies/penguin.png" id="1_4qift"]
+[ext_resource type="Script" path="res://Scenes/player.gd" id="1_quuql"]
+[ext_resource type="AudioStream" uid="uid://bapn25jnbu5hm" path="res://Resources/Media/Sounds/confirmation_001.ogg" id="3_62nkm"]
+[ext_resource type="AudioStream" uid="uid://bfbvq37lo1jgb" path="res://Resources/Media/Sounds/confirmation_002.ogg" id="4_k150b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_76sbl"]
+size = Vector2(18, 15)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lntvd"]
+size = Vector2(18, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e1bni"]
+size = Vector2(16, 14)
+
+[sub_resource type="Animation" id="Animation_rh5vv"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_2i1kw"]
+resource_name = "idle"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [0, 1]
+}
+
+[sub_resource type="Animation" id="Animation_25ynb"]
+resource_name = "walk"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tnddq"]
+_data = {
+"RESET": SubResource("Animation_rh5vv"),
+"idle": SubResource("Animation_2i1kw"),
+"walk": SubResource("Animation_25ynb")
+}
+
+[node name="Player" type="CharacterBody2D"]
+collision_layer = 9
+collision_mask = 9
+script = ExtResource("1_quuql")
+
+[node name="Collector" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Collector"]
+position = Vector2(-2, 8.5)
+shape = SubResource("RectangleShape2D_76sbl")
+debug_color = Color(0.113725, 0.643137, 0.258824, 0.419608)
+
+[node name="Damage" type="Area2D" parent="."]
+collision_layer = 4
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Damage"]
+position = Vector2(-2, 9)
+shape = SubResource("RectangleShape2D_lntvd")
+debug_color = Color(0.992157, 0, 0.227451, 0.419608)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 9)
+shape = SubResource("RectangleShape2D_e1bni")
+debug_color = Color(0, 0.6, 0.701961, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_4qift")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_tnddq")
+}
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(4.5, 2.9)
+limit_left = 0
+limit_top = 0
+limit_right = 1090
+limit_bottom = 220
+
+[node name="CoinSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_62nkm")
+
+[node name="FishSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_k150b")
+
+[connection signal="body_entered" from="Collector" to="." method="_on_collector_body_entered"]
+[connection signal="body_entered" from="Damage" to="." method="_on_damage_body_entered"]

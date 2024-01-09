@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://cq4m4epv6yhjv"]
+
+[ext_resource type="Texture2D" uid="uid://d2j2yu67dhi0l" path="res://Resources/Assets/Enemies/fish.png" id="1_dq5cq"]
+
+[node name="Dialog" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 31.0
+offset_bottom = 26.0
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 37.0
+offset_bottom = 22.0
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(19, 11)
+texture = ExtResource("1_dq5cq")
+hframes = 3
