@@ -1,0 +1,79 @@
+[gd_scene load_steps=5 format=3 uid="uid://cl1fp3ce62owx"]
+
+[ext_resource type="Script" path="res://Scripts/score_board.gd" id="1_001ra"]
+[ext_resource type="Texture2D" uid="uid://bxbfty2mj3t8k" path="res://Resources/Assets/Objects/coin_small_gold.png" id="1_fqwjh"]
+[ext_resource type="Script" path="res://Scripts/MoneyScore.gd" id="2_fqkgd"]
+[ext_resource type="Script" path="res://Scenes/TimeScore.gd" id="4_sma44"]
+
+[node name="ScoreBoard" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_001ra")
+metadata/_edit_horizontal_guides_ = [7.0]
+
+[node name="MoneyScore" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_fqkgd")
+
+[node name="Panel" type="Panel" parent="MoneyScore"]
+layout_mode = 0
+offset_left = 9.0
+offset_top = 8.0
+offset_right = 103.0
+offset_bottom = 47.0
+
+[node name="Sprite2D" type="Sprite2D" parent="MoneyScore"]
+position = Vector2(28, 28)
+scale = Vector2(1.78125, 1.75)
+texture = ExtResource("1_fqwjh")
+hframes = 6
+
+[node name="Label" type="Label" parent="MoneyScore"]
+layout_mode = 2
+offset_left = 43.0
+offset_top = 2.0
+offset_right = 52.0
+offset_bottom = 47.0
+theme_override_font_sizes/font_size = 32
+text = ":"
+
+[node name="MoneyCounter" type="Label" parent="MoneyScore"]
+layout_mode = 0
+offset_left = 61.0
+offset_top = 4.0
+offset_right = 97.0
+offset_bottom = 49.0
+theme_override_font_sizes/font_size = 32
+text = "00"
+
+[node name="TimeScore" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 1049.0
+offset_top = 7.0
+offset_right = 1145.0
+offset_bottom = 47.0
+script = ExtResource("4_sma44")
+
+[node name="Panel" type="Panel" parent="TimeScore"]
+layout_mode = 0
+offset_right = 94.0
+offset_bottom = 40.0
+
+[node name="TimeCounter" type="Label" parent="TimeScore"]
+layout_mode = 0
+offset_left = 20.0
+offset_top = -4.0
+offset_right = 74.0
+offset_bottom = 41.0
+theme_override_font_sizes/font_size = 32
+text = "200"
+
+[node name="Timer" type="Timer" parent="TimeScore"]
+
+[connection signal="timeout" from="TimeScore/Timer" to="TimeScore" method="_on_timer_timeout"]

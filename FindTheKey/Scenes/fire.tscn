@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://dawupxcv20enm"]
 
-[ext_resource type="Script" path="res://Fire.gd" id="1_2wr7n"]
+[ext_resource type="Script" path="res://Scripts/Fire.gd" id="1_2wr7n"]
 [ext_resource type="Texture2D" uid="uid://byqbwp13inxh7" path="res://Resources/Assets/Enemies/fire.png" id="2_n5sj7"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4we36"]
@@ -71,5 +71,10 @@ autoplay = "move"
 position = Vector2(0, 5.5)
 shape = SubResource("RectangleShape2D_fdphn")
 debug_color = Color(0.776471, 0.439216, 0, 0.419608)
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+position = Vector2(-8, 0)
+scale = Vector2(0.36, 1)
+target_position = Vector2(0, 17)
 
 [connection signal="body_entered" from="WallDetector" to="." method="_on_wall_detector_body_entered"]

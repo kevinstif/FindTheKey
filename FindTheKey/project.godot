@@ -11,9 +11,13 @@ config_version=5
 [application]
 
 config/name="FindTheKey"
-run/main_scene="res://Scenes/map_1.tscn"
+run/main_scene="res://Scenes/main_menu.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
 
 [layer_names]
 
@@ -21,6 +25,7 @@ config/icon="res://icon.svg"
 2d_physics/layer_2="collect"
 2d_physics/layer_3="damage"
 2d_physics/layer_4="dialog"
+2d_physics/layer_5="doors"
 
 [rendering]
 

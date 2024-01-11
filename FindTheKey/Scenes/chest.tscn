@@ -1,0 +1,69 @@
+[gd_scene load_steps=8 format=3 uid="uid://cjcxqe5yp37kn"]
+
+[ext_resource type="Script" path="res://Scripts/Chest.gd" id="1_2xi02"]
+[ext_resource type="Texture2D" uid="uid://w3m75beimm4d" path="res://Resources/Assets/Objects/treasure_chest.png" id="2_hmp86"]
+[ext_resource type="PackedScene" uid="uid://b7n1gc2jucir2" path="res://Scenes/gem.tscn" id="3_3au50"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kx1np"]
+size = Vector2(28, 16)
+
+[sub_resource type="Animation" id="Animation_oevlx"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_opbja"]
+resource_name = "open"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [0, 1, 2]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_pf6eh"]
+_data = {
+"RESET": SubResource("Animation_oevlx"),
+"open": SubResource("Animation_opbja")
+}
+
+[node name="Chest" type="Area2D"]
+collision_layer = 16
+collision_mask = 16
+script = ExtResource("1_2xi02")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-2, 8)
+shape = SubResource("RectangleShape2D_kx1np")
+debug_color = Color(0, 0.647059, 0.168627, 0.419608)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_hmp86")
+hframes = 4
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_pf6eh")
+}
+
+[node name="Gem" parent="." instance=ExtResource("3_3au50")]
+position = Vector2(-2, -27)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

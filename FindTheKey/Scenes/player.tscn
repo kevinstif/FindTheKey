@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://btorfxim0y1jl"]
+[gd_scene load_steps=13 format=3 uid="uid://btorfxim0y1jl"]
 
 [ext_resource type="Texture2D" uid="uid://beequw6iumu70" path="res://Resources/Assets/Enemies/penguin.png" id="1_4qift"]
-[ext_resource type="Script" path="res://Scenes/player.gd" id="1_quuql"]
+[ext_resource type="Script" path="res://Scripts/player.gd" id="1_quuql"]
+[ext_resource type="PackedScene" uid="uid://dn4f3piajmlp8" path="res://Scenes/gui.tscn" id="2_aaj7v"]
 [ext_resource type="AudioStream" uid="uid://bapn25jnbu5hm" path="res://Resources/Media/Sounds/confirmation_001.ogg" id="3_62nkm"]
 [ext_resource type="AudioStream" uid="uid://bfbvq37lo1jgb" path="res://Resources/Media/Sounds/confirmation_002.ogg" id="4_k150b"]
 
@@ -70,24 +71,28 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody2D"]
-collision_layer = 9
-collision_mask = 9
+collision_layer = 25
+collision_mask = 25
 script = ExtResource("1_quuql")
 
-[node name="Collector" type="Area2D" parent="."]
+[node name="GUI" parent="." instance=ExtResource("2_aaj7v")]
+
+[node name="Detectors" type="Node2D" parent="."]
+
+[node name="Collector" type="Area2D" parent="Detectors"]
 collision_layer = 2
 collision_mask = 2
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Collector"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detectors/Collector"]
 position = Vector2(-2, 8.5)
 shape = SubResource("RectangleShape2D_76sbl")
 debug_color = Color(0.113725, 0.643137, 0.258824, 0.419608)
 
-[node name="Damage" type="Area2D" parent="."]
+[node name="Damage" type="Area2D" parent="Detectors"]
 collision_layer = 4
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Damage"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Detectors/Damage"]
 position = Vector2(-2, 9)
 shape = SubResource("RectangleShape2D_lntvd")
 debug_color = Color(0.992157, 0, 0.227451, 0.419608)
@@ -110,7 +115,7 @@ libraries = {
 zoom = Vector2(4.5, 2.9)
 limit_left = 0
 limit_top = 0
-limit_right = 1090
+limit_right = 3040
 limit_bottom = 220
 
 [node name="CoinSound" type="AudioStreamPlayer" parent="."]
@@ -119,5 +124,5 @@ stream = ExtResource("3_62nkm")
 [node name="FishSound" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_k150b")
 
-[connection signal="body_entered" from="Collector" to="." method="_on_collector_body_entered"]
-[connection signal="body_entered" from="Damage" to="." method="_on_damage_body_entered"]
+[connection signal="body_entered" from="Detectors/Collector" to="." method="_on_collector_body_entered"]
+[connection signal="body_entered" from="Detectors/Damage" to="." method="_on_damage_body_entered"]

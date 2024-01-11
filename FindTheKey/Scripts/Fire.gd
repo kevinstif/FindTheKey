@@ -2,17 +2,21 @@ extends CharacterBody2D
 
 
 const SPEED = 100.0
-const JUMP_VELOCITY = -400.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 
-var direction = 1
+var direction: int
 var random = RandomNumberGenerator.new()
+@onready var raycast = $RayCast2D
 
 func _ready():
 	direction = random.randi_range(0,1)
 	if direction == 0: direction = -1
+	elif direction == 1: rotate_x()
+
+func rotate_x():
+	scale.x = - scale.x
 
 func _physics_process(delta):
 
@@ -25,8 +29,14 @@ func _physics_process(delta):
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 
 	move_and_slide()
+	turn()
 
+func turn():
+	if not $RayCast2D.is_colliding():
+		direction *= -1
+		rotate_x()
 
 func _on_wall_detector_body_entered(body):
-	if body.get_name() == 'TileMap':
+	if body.get_name() == 'TileMap' or body.get_name().find('Fire') != -1:
 		direction *= -1
+		rotate_x()
