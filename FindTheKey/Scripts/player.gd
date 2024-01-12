@@ -1,16 +1,16 @@
 extends CharacterBody2D
 
+class_name Player
+
 const SPEED = 100.0
 const JUMP_VELOCITY = -400.0
 
-# Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var direction = 0
 var moneys = 0
 var fish = false
 
 @onready var camera = $Camera2D 
-#@onready var score = $GUI/ScoreBoard
 var joystick: Joystick
 
 func _physics_process(delta):
@@ -62,16 +62,7 @@ func deliver_fish():
 		camera.limit_right = 3190
 
 func animation(direction: float):
-	var sprite = $Sprite2D
-	var animationPlayer = $AnimationPlayer
-	if direction == 1:
-		sprite.flip_h = false
-		animationPlayer.play("walk")
-	elif direction == -1:
-		sprite.flip_h = true
-		animationPlayer.play("walk")
-	else:
-		animationPlayer.play("idle")
+	pass
 
 func _on_collector_body_entered(body):
 	if body.get_name().find('Coin') != -1:
@@ -94,6 +85,5 @@ func _on_damage_body_entered(body):
 	if body.get_name().find('Fire') != -1:
 		get_tree().reload_current_scene()
 
-
-func _on_gui_send_joystick(j):
+func receive_joystick(j):
 	joystick = j

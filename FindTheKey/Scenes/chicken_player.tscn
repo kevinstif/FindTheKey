@@ -1,18 +1,18 @@
-[gd_scene load_steps=12 format=3 uid="uid://btorfxim0y1jl"]
+[gd_scene load_steps=12 format=3 uid="uid://7meftqgx0gtq"]
 
-[ext_resource type="Texture2D" uid="uid://beequw6iumu70" path="res://Resources/Assets/Enemies/penguin.png" id="1_4qift"]
-[ext_resource type="Script" path="res://Scripts/player.gd" id="1_quuql"]
-[ext_resource type="AudioStream" uid="uid://bapn25jnbu5hm" path="res://Resources/Media/Sounds/confirmation_001.ogg" id="3_62nkm"]
-[ext_resource type="AudioStream" uid="uid://bfbvq37lo1jgb" path="res://Resources/Media/Sounds/confirmation_002.ogg" id="4_k150b"]
+[ext_resource type="Script" path="res://Scripts/chicken_player.gd" id="1_64nvy"]
+[ext_resource type="Texture2D" uid="uid://cv4etecb7j2xf" path="res://Resources/Assets/Enemies/chicken.png" id="2_8o2h3"]
+[ext_resource type="AudioStream" uid="uid://bapn25jnbu5hm" path="res://Resources/Media/Sounds/confirmation_001.ogg" id="3_mi6uy"]
+[ext_resource type="AudioStream" uid="uid://bfbvq37lo1jgb" path="res://Resources/Media/Sounds/confirmation_002.ogg" id="4_ygx6n"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_76sbl"]
-size = Vector2(18, 15)
+size = Vector2(17, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lntvd"]
-size = Vector2(18, 16)
+size = Vector2(17, 17)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_e1bni"]
-size = Vector2(16, 14)
+size = Vector2(15, 14)
 
 [sub_resource type="Animation" id="Animation_rh5vv"]
 length = 0.001
@@ -47,7 +47,6 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_25ynb"]
 resource_name = "walk"
-length = 0.6
 loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -56,10 +55,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [0, 1, 2, 3]
+"values": [7, 8, 9, 10, 11, 12]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_tnddq"]
@@ -69,10 +68,10 @@ _data = {
 "walk": SubResource("Animation_25ynb")
 }
 
-[node name="Player" type="CharacterBody2D"]
+[node name="ChickenPlayer" type="CharacterBody2D"]
 collision_layer = 25
 collision_mask = 25
-script = ExtResource("1_quuql")
+script = ExtResource("1_64nvy")
 
 [node name="Detectors" type="Node2D" parent="."]
 
@@ -81,7 +80,7 @@ collision_layer = 2
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detectors/Collector"]
-position = Vector2(-2, 8.5)
+position = Vector2(-0.5, 8.5)
 shape = SubResource("RectangleShape2D_76sbl")
 debug_color = Color(0.113725, 0.643137, 0.258824, 0.419608)
 
@@ -90,18 +89,19 @@ collision_layer = 4
 collision_mask = 4
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Detectors/Damage"]
-position = Vector2(-2, 9)
+position = Vector2(-0.5, 8.5)
 shape = SubResource("RectangleShape2D_lntvd")
 debug_color = Color(0.992157, 0, 0.227451, 0.419608)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-2, 9)
+position = Vector2(-0.5, 9)
 shape = SubResource("RectangleShape2D_e1bni")
 debug_color = Color(0, 0.6, 0.701961, 0.419608)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("1_4qift")
-hframes = 4
+texture = ExtResource("2_8o2h3")
+hframes = 7
+vframes = 2
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -116,10 +116,10 @@ limit_right = 3040
 limit_bottom = 220
 
 [node name="CoinSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("3_62nkm")
+stream = ExtResource("3_mi6uy")
 
 [node name="FishSound" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_k150b")
+stream = ExtResource("4_ygx6n")
 
 [connection signal="body_entered" from="Detectors/Collector" to="." method="_on_collector_body_entered"]
 [connection signal="body_entered" from="Detectors/Damage" to="." method="_on_damage_body_entered"]

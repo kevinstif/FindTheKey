@@ -4,7 +4,6 @@
 [ext_resource type="Script" path="res://Scripts/map_1.gd" id="1_otn11"]
 [ext_resource type="Texture2D" uid="uid://byv7goyfxnb50" path="res://Resources/Assets/Tilesets/tileset_snow.png" id="1_r4sq5"]
 [ext_resource type="Texture2D" uid="uid://c7dn1eue5hmvc" path="res://Resources/Assets/Backgrounds/mountains_a.png" id="2_g3pxe"]
-[ext_resource type="PackedScene" uid="uid://btorfxim0y1jl" path="res://Scenes/player.tscn" id="2_orwkd"]
 [ext_resource type="PackedScene" uid="uid://dn4f3piajmlp8" path="res://Scenes/gui.tscn" id="2_w6rga"]
 [ext_resource type="PackedScene" uid="uid://cnew8i3a2632k" path="res://Scenes/wall.tscn" id="3_q5ibv"]
 [ext_resource type="Texture2D" uid="uid://fxxmwxep0ggk" path="res://Resources/Assets/UI/arrow.png" id="4_0sp32"]
@@ -133,6 +132,8 @@ texture = ExtResource("1_r4sq5")
 [sub_resource type="TileSet" id="TileSet_oh13o"]
 physics_layer_0/collision_layer = 1
 sources/0 = SubResource("TileSetAtlasSource_77ahv")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l3ob5"]
 
 [node name="Map1" type="Node2D"]
 script = ExtResource("1_otn11")
@@ -327,13 +328,16 @@ position = Vector2(2020, 184)
 [node name="Fire" parent="." instance=ExtResource("7_f8r41")]
 position = Vector2(2750, 184)
 
-[node name="Player" parent="." instance=ExtResource("2_orwkd")]
-position = Vector2(13, 175)
-
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("4_2s1mh")
 volume_db = -25.0
 autoplay = true
 
-[connection signal="sendJoystick" from="GUI" to="Player" method="_on_gui_send_joystick"]
+[node name="SpawnZone" type="Area2D" parent="."]
+position = Vector2(19, 175)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnZone"]
+shape = SubResource("RectangleShape2D_l3ob5")
+debug_color = Color(0, 0.639216, 0.360784, 0.419608)
+
 [connection signal="fish_delivered" from="NPC" to="." method="_on_npc_fish_delivered"]

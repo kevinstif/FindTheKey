@@ -1,7 +1,7 @@
 extends CanvasLayer
+class_name GUI
 
 @onready var joystick = $Joystick
-signal sendJoystick(j:Joystick)
 
-func _ready():
-	sendJoystick.emit(joystick)
+func get_joystick():
+	return joystick
