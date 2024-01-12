@@ -1,8 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://btorfxim0y1jl"]
+[gd_scene load_steps=12 format=3 uid="uid://btorfxim0y1jl"]
 
 [ext_resource type="Texture2D" uid="uid://beequw6iumu70" path="res://Resources/Assets/Enemies/penguin.png" id="1_4qift"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_quuql"]
-[ext_resource type="PackedScene" uid="uid://dn4f3piajmlp8" path="res://Scenes/gui.tscn" id="2_aaj7v"]
 [ext_resource type="AudioStream" uid="uid://bapn25jnbu5hm" path="res://Resources/Media/Sounds/confirmation_001.ogg" id="3_62nkm"]
 [ext_resource type="AudioStream" uid="uid://bfbvq37lo1jgb" path="res://Resources/Media/Sounds/confirmation_002.ogg" id="4_k150b"]
 
@@ -74,8 +73,6 @@ _data = {
 collision_layer = 25
 collision_mask = 25
 script = ExtResource("1_quuql")
-
-[node name="GUI" parent="." instance=ExtResource("2_aaj7v")]
 
 [node name="Detectors" type="Node2D" parent="."]
 

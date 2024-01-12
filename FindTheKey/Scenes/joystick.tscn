@@ -13,10 +13,10 @@ script = ExtResource("1_jd13f")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_t48k1")
 
-[node name="Rango" type="Sprite2D" parent="."]
+[node name="Range" type="Sprite2D" parent="."]
 scale = Vector2(0.07, 0.07)
 texture = ExtResource("2_7b3at")
 
-[node name="Palanca" type="Sprite2D" parent="."]
+[node name="Lever" type="Sprite2D" parent="."]
 scale = Vector2(0.015, 0.015)
 texture = ExtResource("3_0dnx4")

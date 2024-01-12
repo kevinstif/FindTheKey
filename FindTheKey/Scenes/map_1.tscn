@@ -1,10 +1,11 @@
-[gd_scene load_steps=19 format=3 uid="uid://dbuju8r8dhylv"]
+[gd_scene load_steps=20 format=3 uid="uid://dbuju8r8dhylv"]
 
 [ext_resource type="Texture2D" uid="uid://44p1abjednk1" path="res://Resources/Assets/Deco/water_a_8frames.png" id="1_k8rdv"]
 [ext_resource type="Script" path="res://Scripts/map_1.gd" id="1_otn11"]
 [ext_resource type="Texture2D" uid="uid://byv7goyfxnb50" path="res://Resources/Assets/Tilesets/tileset_snow.png" id="1_r4sq5"]
 [ext_resource type="Texture2D" uid="uid://c7dn1eue5hmvc" path="res://Resources/Assets/Backgrounds/mountains_a.png" id="2_g3pxe"]
 [ext_resource type="PackedScene" uid="uid://btorfxim0y1jl" path="res://Scenes/player.tscn" id="2_orwkd"]
+[ext_resource type="PackedScene" uid="uid://dn4f3piajmlp8" path="res://Scenes/gui.tscn" id="2_w6rga"]
 [ext_resource type="PackedScene" uid="uid://cnew8i3a2632k" path="res://Scenes/wall.tscn" id="3_q5ibv"]
 [ext_resource type="Texture2D" uid="uid://fxxmwxep0ggk" path="res://Resources/Assets/UI/arrow.png" id="4_0sp32"]
 [ext_resource type="AudioStream" uid="uid://cst4jqbow5fxc" path="res://Resources/Media/Music/POL-king-of-coins-short.wav" id="4_2s1mh"]
@@ -138,6 +139,8 @@ script = ExtResource("1_otn11")
 metadata/_edit_horizontal_guides_ = [220.0]
 metadata/_edit_vertical_guides_ = [3190.0]
 
+[node name="GUI" parent="." instance=ExtResource("2_w6rga")]
+
 [node name="Background" type="Node2D" parent="."]
 
 [node name="Sky" type="Sprite2D" parent="Background"]
@@ -239,9 +242,6 @@ position = Vector2(3200, 152)
 scale = Vector2(1, 4.04978)
 change_scene = "res://Scenes/main_menu.tscn"
 
-[node name="Player" parent="." instance=ExtResource("2_orwkd")]
-position = Vector2(13, 175)
-
 [node name="Coins" type="Node2D" parent="."]
 
 [node name="Coin" parent="Coins" instance=ExtResource("5_bkmb4")]
@@ -324,11 +324,16 @@ position = Vector2(1753, 183)
 [node name="Fire9" parent="Enemies" instance=ExtResource("7_f8r41")]
 position = Vector2(2020, 184)
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
-stream = ExtResource("4_2s1mh")
-autoplay = true
-
 [node name="Fire" parent="." instance=ExtResource("7_f8r41")]
 position = Vector2(2750, 184)
 
+[node name="Player" parent="." instance=ExtResource("2_orwkd")]
+position = Vector2(13, 175)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_2s1mh")
+volume_db = -25.0
+autoplay = true
+
+[connection signal="sendJoystick" from="GUI" to="Player" method="_on_gui_send_joystick"]
 [connection signal="fish_delivered" from="NPC" to="." method="_on_npc_fish_delivered"]

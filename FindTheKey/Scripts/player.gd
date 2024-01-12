@@ -5,20 +5,28 @@ const JUMP_VELOCITY = -400.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
+var direction = 0
 var moneys = 0
 var fish = false
+
 @onready var camera = $Camera2D 
-@onready var score = $GUI/ScoreBoard
-@onready var controls = $GUI/Joystick
+#@onready var score = $GUI/ScoreBoard
+var joystick: Joystick
 
 func _physics_process(delta):
 	jump(delta)
-	move_joystick()
-	#move_key(delta)
+	move()
+	animation(direction)
 	move_and_slide()
 
+func move():
+	if joystick != null and is_instance_valid(joystick):
+		move_joystick()
+	else:
+		move_key()
+
 func move_joystick():
-	var direction = controls.direction.x
+	direction = joystick.direction.x
 	
 	if direction > 0: direction = 1
 	elif direction < 0: direction = -1
@@ -27,7 +35,6 @@ func move_joystick():
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-	animation(direction)
 
 func jump(delta):
 	if not is_on_floor():
@@ -37,13 +44,12 @@ func jump(delta):
 		velocity.y = JUMP_VELOCITY
 
 func move_key():
-	var direction = Input.get_axis("ui_left", "ui_right")
+	direction = Input.get_axis("ui_left", "ui_right")
 
 	if direction:
 		velocity.x = direction * SPEED
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
-	animation(direction)
 
 func has_fish():
 	return fish
@@ -73,7 +79,7 @@ func _on_collector_body_entered(body):
 		body.queue_free()
 		var coinSound = $CoinSound
 		coinSound.playing = true
-		score.update_money(moneys)
+		#score.update_money(moneys)
 	elif  body.get_name().find('Fish') != -1:
 		fish = true
 		body.queue_free()
@@ -87,3 +93,7 @@ func _on_collector_body_entered(body):
 func _on_damage_body_entered(body):
 	if body.get_name().find('Fire') != -1:
 		get_tree().reload_current_scene()
+
+
+func _on_gui_send_joystick(j):
+	joystick = j
