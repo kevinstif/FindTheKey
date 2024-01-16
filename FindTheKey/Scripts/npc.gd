@@ -9,7 +9,7 @@ func _ready():
 	dialog.visible = false
 
 func _on_area_2d_body_entered(body):
-	if body.get_name() == "Player":
+	if body.get_name().find('Player') != -1:
 		if body.has_fish():
 			body.deliver_fish()
 			hungry = false
@@ -20,5 +20,5 @@ func _on_area_2d_body_entered(body):
 
 
 func _on_area_2d_body_exited(body):
-	if body.get_name() == "Player" and hungry:
+	if body.get_name().find('Player') != -1 and hungry:
 		dialog.visible = false

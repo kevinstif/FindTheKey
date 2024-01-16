@@ -8,7 +8,7 @@ func _ready():
 	gem.visible = false 
 
 func _on_body_entered(body):
-	if visible and body.get_name() == "Player" and close:
+	if visible and body.get_name().find('Player') != -1 and close:
 		close = false
 		animation.play("open")
 		await get_tree().create_timer(0.3).timeout

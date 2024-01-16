@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://cl1fp3ce62owx"]
+[gd_scene load_steps=6 format=3 uid="uid://cl1fp3ce62owx"]
 
 [ext_resource type="Script" path="res://Scripts/score_board.gd" id="1_001ra"]
 [ext_resource type="Texture2D" uid="uid://bxbfty2mj3t8k" path="res://Resources/Assets/Objects/coin_small_gold.png" id="1_fqwjh"]
 [ext_resource type="Script" path="res://Scripts/MoneyScore.gd" id="2_fqkgd"]
-[ext_resource type="Script" path="res://Scenes/TimeScore.gd" id="4_sma44"]
+[ext_resource type="Script" path="res://Scripts/TimeScore.gd" id="4_sma44"]
+[ext_resource type="Script" path="res://Scripts/Score.gd" id="5_5jx4d"]
 
 [node name="ScoreBoard" type="Control"]
 layout_mode = 3
@@ -17,7 +18,8 @@ metadata/_edit_horizontal_guides_ = [7.0]
 
 [node name="MoneyScore" type="Control" parent="."]
 anchors_preset = 0
-offset_right = 40.0
+offset_left = 216.0
+offset_right = 256.0
 offset_bottom = 40.0
 script = ExtResource("2_fqkgd")
 
@@ -75,5 +77,36 @@ theme_override_font_sizes/font_size = 32
 text = "200"
 
 [node name="Timer" type="Timer" parent="TimeScore"]
+
+[node name="Score" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 10.0
+offset_top = 7.0
+offset_right = 106.0
+offset_bottom = 47.0
+script = ExtResource("5_5jx4d")
+
+[node name="Panel" type="Panel" parent="Score"]
+layout_mode = 0
+offset_right = 198.0
+offset_bottom = 40.0
+
+[node name="ScoreCounter" type="Label" parent="Score"]
+layout_mode = 0
+offset_left = 118.0
+offset_top = -2.0
+offset_right = 172.0
+offset_bottom = 43.0
+theme_override_font_sizes/font_size = 32
+text = "0000"
+
+[node name="Label" type="Label" parent="Score"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = -4.0
+offset_right = 94.0
+offset_bottom = 41.0
+theme_override_font_sizes/font_size = 32
+text = "Score :"
 
 [connection signal="timeout" from="TimeScore/Timer" to="TimeScore" method="_on_timer_timeout"]

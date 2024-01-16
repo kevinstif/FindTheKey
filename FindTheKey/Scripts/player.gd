@@ -2,6 +2,9 @@ extends CharacterBody2D
 
 class_name Player
 
+signal AddMoney
+signal AddGem
+
 const SPEED = 100.0
 const JUMP_VELOCITY = -400.0
 
@@ -60,6 +63,7 @@ func deliver_fish():
 		var fishSound = $FishSound
 		fishSound.playing = true
 		camera.limit_right = 3190
+		AddGem.emit()
 
 func animation(direction: float):
 	pass
@@ -70,16 +74,18 @@ func _on_collector_body_entered(body):
 		body.queue_free()
 		var coinSound = $CoinSound
 		coinSound.playing = true
-		#score.update_money(moneys)
+		AddMoney.emit()
 	elif  body.get_name().find('Fish') != -1:
 		fish = true
 		body.queue_free()
 		var fishSound = $FishSound
 		fishSound.playing = true
+		AddGem.emit()
 	elif  body.get_name().find('Gem') != -1 and body.visible:
 		body.queue_free()
 		var fishSound = $FishSound
 		fishSound.playing = true
+		AddGem.emit()
 
 func _on_damage_body_entered(body):
 	if body.get_name().find('Fire') != -1:
